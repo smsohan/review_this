@@ -31,6 +31,8 @@ class ReviewRequestsController < ApplicationController
   def update
     @review_request = ReviewRequest.find(params[:id])
 
+    return unless valid_requestor?(@review_request)
+
     if @review_request.update_attributes(params[:review_request])
       redirect_to @review_request, notice: 'Review request was successfully updated.'
     else
@@ -40,7 +42,18 @@ class ReviewRequestsController < ApplicationController
 
   def destroy
     @review_request = ReviewRequest.find(params[:id])
+
+    return unless valid_requestor?(@review_request)
+
     @review_request.destroy
     redirect_to review_requests_url
+  end
+
+  private
+  def valid_requestor?(review_request)
+    return true if review_request.requestor == current_user
+
+    render nothing: true, status: :unauthorized
+    false
   end
 end

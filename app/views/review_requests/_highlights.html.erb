@@ -1,0 +1,7 @@
+<% @review_requests.each do |review_request| %>
+
+  <%= review_request.title %>
+  <%= review_request.updated_at %>
+  <%= review_request.requestor.name %>
+
+<% end %>

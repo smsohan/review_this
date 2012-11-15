@@ -1,3 +1,5 @@
 <h1>Welcome <%= current_user.name %></h1>
 
 <%= button_to 'Request a Review', new_review_request_path, class: 'btn btn-primary btn-large', method: :get %>
+
+<%= render 'review_requests/highlights' %>
