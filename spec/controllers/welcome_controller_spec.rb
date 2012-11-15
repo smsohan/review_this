@@ -11,7 +11,7 @@ describe WelcomeController do
 
     it 'should render the page when logged in' do
 
-      user = User.create!(email: 'example@domain.com', password: 'example1', password_confirmation: 'example1')
+      user = User.create!(name: 'example', email: 'example@domain.com', password: 'example1', password_confirmation: 'example1')
 
       sign_in user
 
