@@ -1,4 +1,7 @@
 ReviewThis::Application.routes.draw do
+  resources :review_requests
+
+
   devise_for :users
 
   get "welcome/index"
