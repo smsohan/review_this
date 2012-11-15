@@ -2,6 +2,8 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th>Highest Bid</th>
+      <th>#Bids</th>
       <th>Requestor</th>
       <th>Reviewer</th>
       <th>Last Updated</th>
@@ -12,6 +14,8 @@
     <% @review_requests.each do |review_request| %>
       <tr>
         <td><%= link_to review_request.title, review_request_path(review_request) %></td>
+        <td><%= review_request.highest_bid %></td>
+        <td><%= review_request.bids_count %></td>
         <td><%= review_request.requestor.name %></td>
         <td><%= review_request.reviewer.try(:name) %></td>
         <td><%= distance_of_time_in_words_to_now review_request.updated_at %> ago</td>
@@ -28,8 +32,13 @@
           <% end %>
 
           <% if review_request.can_bid?(current_user) %>
-            <%= link_to 'Place a bid', new_review_request_bid_path(review_request) %>
+            <%= button_to 'Place a bid', new_review_request_bid_path(review_request), method: :get, class: 'btn' %>
           <% end %>
+
+          <% if user_bid = review_request.bid_by(current_user) %>
+            <%= link_to number_to_currency(user_bid.bid_amount), edit_review_request_bid_path(review_request, user_bid) %>
+          <% end %>
+
         </td>
       </tr>
     <% end %>

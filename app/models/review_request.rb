@@ -16,4 +16,16 @@ class ReviewRequest < ActiveRecord::Base
     requestor != user && bids.map(&:bidder_id).exclude?(user.id)
   end
 
+  def highest_bid
+    bids.maximum(:bid_amount)
+  end
+
+  def bids_count
+    bids.count
+  end
+
+  def bid_by(user)
+    bids.where(bidder_id: user.id).first
+  end
+
 end
