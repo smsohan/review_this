@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115031817) do
+ActiveRecord::Schema.define(:version => 20121115043449) do
+
+  create_table "bids", :force => true do |t|
+    t.integer  "review_request_id"
+    t.integer  "bidder_id"
+    t.integer  "bid_amount"
+    t.text     "bid_message"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "review_requests", :force => true do |t|
     t.integer  "requestor_id"

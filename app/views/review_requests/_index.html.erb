@@ -26,6 +26,10 @@
                         :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                         :class => 'btn btn-mini btn-danger' %>
           <% end %>
+
+          <% if review_request.can_bid?(current_user) %>
+            <%= link_to 'Place a bid', new_review_request_bid_path(review_request) %>
+          <% end %>
         </td>
       </tr>
     <% end %>

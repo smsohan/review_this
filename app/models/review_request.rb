@@ -6,8 +6,14 @@ class ReviewRequest < ActiveRecord::Base
 
   validates :requestor_id, presence: true
 
+  has_many :bids, dependent: :destroy
+
   def self.recent(count)
     order('updated_at DESC').limit(count)
+  end
+
+  def can_bid?(user)
+    requestor != user && bids.map(&:bidder_id).exclude?(user.id)
   end
 
 end

@@ -1,5 +1,10 @@
 ReviewThis::Application.routes.draw do
-  resources :review_requests
+
+  resources :bids, only: [:create, :update]
+
+  resources :review_requests do
+    resources :bids
+  end
 
 
   devise_for :users

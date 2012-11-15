@@ -10,6 +10,16 @@
   <dd><%= @review_request.content %></dd>
 </dl>
 
+<h3>Bids</h3>
+
+<% if @review_request.can_bid?(current_user) %>
+  <%= button_to 'Place a bid', new_review_request_bid_path(@review_request), class: 'btn btn-primary', method: :get %>
+<% end %>
+
+<div>
+  <%= render partial: 'bids/index', locals: {bids: @review_request.bids} %>
+</div>
+
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               review_requests_path, :class => 'btn'  %>

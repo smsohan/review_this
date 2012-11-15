@@ -1,0 +1,30 @@
+<%= form_for @bid, :html => { :class => 'form-horizontal' } do |f| %>
+
+  <%= f.hidden_field :review_request_id %>
+
+  <div class="control-group">
+    <%= f.label :review_request, :class => 'control-label' %>
+    <div class="controls">
+      <%= @bid.review_request.title %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :bid_amount, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :bid_amount, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :bid_message, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :bid_message, :class => 'text_area input-xxlarge' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                bids_path, :class => 'btn' %>
+  </div>
+<% end %>
