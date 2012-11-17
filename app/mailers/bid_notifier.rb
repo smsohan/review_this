@@ -7,4 +7,11 @@ class BidNotifier < ActionMailer::Base
     mail to: bid.review_request.requestor.email,
          subject: "New bid on #{bid.review_request.title}"
   end
+
+  def bid_updated(bid)
+    @bid = bid
+
+    mail to: bid.review_request.requestor.email,
+         subject: "Updated bid on #{bid.review_request.title}"
+  end
 end

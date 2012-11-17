@@ -18,13 +18,13 @@
         <td>
           <% if bid.bidder == current_user %>
 
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_review_request_bid_path(bid.review_request, bid), :class => 'btn btn-mini' %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+            <%= button_to 'Edit',
+                        edit_review_request_bid_path(bid.review_request, bid), :class => 'btn btn-mini', method: :get %>
+            <%= button_to 'Delete',
                         bid_path(bid),
                         :method => :delete,
                         :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                        :class => 'btn btn-mini btn-danger' %>
+                        :class => 'btn btn-mini btn-danger', method: :get %>
           <% end %>
         </td>
       </tr>

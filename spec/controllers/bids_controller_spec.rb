@@ -118,6 +118,21 @@ describe BidsController do
       response.should redirect_to review_request_path(review_request)
     end
 
+    it 'sends an email notification on a bid update' do
+      login
+
+      other_user = User.create!(name: 'other', email: 'other@domain.com', password: 'other1', password_confirmation: 'other1')
+      review_request = ReviewRequest.new(title: 'review'){|rr| rr.requestor = other_user; rr.save!}
+
+      bid = Bid.new(bid_amount: 100, bid_message: 'Interested'){|b| b.bidder = @user; b.review_request =  review_request;  b.save!}
+
+      mail = mock()
+      BidNotifier.should_receive(:bid_updated).and_return(mail)
+      mail.should_receive(:deliver)
+
+      put :update, id: bid.id, bid: { bid_amount: 130 }
+    end
+
   end
 
 end

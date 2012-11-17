@@ -44,6 +44,7 @@ class BidsController < ApplicationController
     end
 
     if @bid.update_attributes(params[:bid])
+      BidNotifier.bid_updated(@bid).deliver
       redirect_to review_request_path(@bid.review_request), notice: 'Bid was successfully updated.'
     else
       render action: "edit"
