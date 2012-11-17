@@ -4,24 +4,30 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:review_request_id) %>:</strong></dt>
-  <dd><%= @bid.review_request_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:bidder_id) %>:</strong></dt>
-  <dd><%= @bid.bidder_id %></dd>
+  <dt><strong>Review Request:</strong></dt>
+  <dd><%= link_to @bid.review_request.title, review_request_path(@bid.review_request) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:bid_amount) %>:</strong></dt>
   <dd><%= @bid.bid_amount %></dd>
   <dt><strong><%= model_class.human_attribute_name(:bid_message) %>:</strong></dt>
-  <dd><%= @bid.bid_message %></dd>
+  <dd><%= simple_format @bid.bid_message %></dd>
 </dl>
 
 <div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              bids_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_bid_path(@bid), :class => 'btn' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+  <%= link_to 'Back', bids_path, :class => 'btn', method: :get  %>
+  <%= link_to 'Edit', edit_bid_path(@bid), :class => 'btn', method: :get %>
+  <%= link_to 'Delete',
               bid_path(@bid),
               :method => 'delete',
               :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+              :class => 'btn btn-danger', method: :delete %>
 </div>
+
+<%= render partial: 'comments/index', locals: {bid: @bid} %>
+
+<%= content_for :scripts do %>
+
+  $(document).ready(function(){
+    new window.CommentForm($('#new-comment-form'), $('#comments'));
+  });
+
+<% end %>

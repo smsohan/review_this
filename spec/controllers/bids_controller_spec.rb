@@ -135,4 +135,35 @@ describe BidsController do
 
   end
 
+  context "#show" do
+
+    it 'responds with unauthorized unless the user is the bidder' do
+      login
+
+      other_user = User.create!(name: 'other', email: 'other@domain.com', password: 'other1', password_confirmation: 'other1')
+      review_request = ReviewRequest.new(title: 'review'){|rr| rr.requestor = other_user; rr.save!}
+
+      bid = Bid.new(bid_amount: 100, bid_message: 'Interested'){|b| b.bidder = other_user; b.review_request =  review_request;  b.save!}
+
+      get :show, id: bid.id
+
+      response.status.should == 401
+    end
+
+    it 'should let the bidder see its details' do
+      login
+
+      other_user = User.create!(name: 'other', email: 'other@domain.com', password: 'other1', password_confirmation: 'other1')
+      review_request = ReviewRequest.new(title: 'review'){|rr| rr.requestor = other_user; rr.save!}
+
+      bid = Bid.new(bid_amount: 100, bid_message: 'Interested'){|b| b.bidder = @user; b.review_request =  review_request;  b.save!}
+
+      get :show, id: bid.id
+
+      response.status.should == 200
+      response.should render_template :show
+    end
+
+  end
+
 end

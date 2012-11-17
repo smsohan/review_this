@@ -1,6 +1,9 @@
 ReviewThis::Application.routes.draw do
 
-  resources :bids, only: [:create, :update]
+  resources :comments
+
+
+  resources :bids
 
   resources :review_requests do
     resources :bids

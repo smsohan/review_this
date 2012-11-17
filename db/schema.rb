@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115043449) do
+ActiveRecord::Schema.define(:version => 20121117164055) do
 
   create_table "bids", :force => true do |t|
     t.integer  "review_request_id"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(:version => 20121115043449) do
     t.text     "bid_message"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "bid_id"
+    t.integer  "user_id"
+    t.text     "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "review_requests", :force => true do |t|

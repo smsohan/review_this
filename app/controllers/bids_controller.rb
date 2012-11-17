@@ -8,6 +8,10 @@ class BidsController < ApplicationController
 
   def show
     @bid = Bid.find(params[:id])
+
+    if @bid.bidder != current_user
+      render text: 'Cannot see the details of other users bid', status: :unauthorized
+    end
   end
 
   def new

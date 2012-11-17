@@ -1,0 +1,6 @@
+  <dl class="dl-horizontal">
+    <dt><strong><%= comment.user.name %> wrote:</strong></dt>
+    <dd><%= simple_format comment.body %></dd>
+    <dt></dt>
+    <dd><%= distance_of_time_in_words_to_now comment.created_at %> ago</dd>
+  </dl>

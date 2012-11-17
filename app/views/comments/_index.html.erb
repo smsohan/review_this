@@ -1,0 +1,7 @@
+<%= render partial: 'comments/form', locals: {comment: Comment.new(bid_id: bid.id)} %>
+
+<div id="comments">
+  <% bid.comments.each do |comment| %>
+    <%= render comment %>
+  <% end %>
+</div>
