@@ -1,0 +1,14 @@
+Hi <%= @bid.review_request.requestor.name %>:
+You have a new bid of <%=number_to_currency @bid.bid_amount %> from <%= @bid.bidder.name %>.
+
+<%= @bid.bidder.name %> wrote:
+
+<%= @bid.bid_message %>
+
+You can accept this bid by visiting <%= link_to @bid.review_request.title, review_request_url(@bid.review_request) %>
+
+Thank you.
+
+--
+ReviewThis
+

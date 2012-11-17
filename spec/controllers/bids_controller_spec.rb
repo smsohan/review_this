@@ -65,6 +65,18 @@ describe BidsController do
       bid.bid_message.should == 'Interested'
     end
 
+    it 'sends an email notification to the requestor' do
+      login
+      requestor = User.create!(name: 'other', email: 'other@domain.com', password: 'other1', password_confirmation: 'other1')
+      review_request = ReviewRequest.new(title: 'review'){|rr| rr.requestor = requestor; rr.save!}
+
+      mail = mock()
+      BidNotifier.should_receive(:new_bid).and_return(mail)
+      mail.should_receive(:deliver)
+
+      post :create, bid: { review_request_id: review_request.id, bid_amount: 100, bid_message: 'Interested' }
+    end
+
   end
 
   context "#update" do

@@ -28,6 +28,7 @@ class BidsController < ApplicationController
     end
 
     if @bid.save
+      BidNotifier.new_bid(@bid).deliver
       redirect_to review_request_path(@bid.review_request), notice: 'Bid was successfully created.'
     else
       render action: "new"
