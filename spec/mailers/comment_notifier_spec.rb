@@ -1,18 +1,22 @@
 require "spec_helper"
 
 describe CommentNotifier do
-  describe "new_comment" do
-    let(:mail) { CommentNotifier.new_comment }
+  context "#new_comment" do
 
-    it "renders the headers" do
-      mail.subject.should eq("New comment")
-      mail.to.should eq(["to@example.org"])
-      mail.from.should eq(["from@example.com"])
+    it 'sends the email to the recipient with the right subject' do
+      requestor = User.create!(name: 'other', email: 'req@email.com', password: 'other1', password_confirmation: 'other1')
+      review_request = ReviewRequest.new(title: 'Need resume reviewed'){|rr| rr.requestor = requestor; rr.save!}
+
+      bid = Bid.new
+      bid.review_request = review_request
+      bid.bidder = User.new(email: 'bidder@email.com', name: 'Bidder')
+      comment = Comment.new{|c| c.bid = bid; c.user = bid.bidder}
+
+      email = CommentNotifier.new_comment(comment)
+      email.to.should == ['req@email.com']
+      email.subject.should == 'Bidder commented on Need resume reviewed'
     end
 
-    it "renders the body" do
-      mail.body.encoded.should match("Hi")
-    end
   end
 
 end

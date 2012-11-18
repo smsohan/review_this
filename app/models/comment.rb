@@ -8,6 +8,8 @@ class Comment < ActiveRecord::Base
   validates :user_id, presence: true
   validates :body, presence: true
 
+  delegate :review_request, to: :bid, allow_nil: true
+
   def recipient
     user == bid.bidder ? bid.requestor : bid.bidder
   end
