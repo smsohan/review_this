@@ -32,7 +32,7 @@ class BidsController < ApplicationController
     end
 
     if @bid.save
-      BidNotifier.new_bid(@bid).deliver
+      BidNotifier.delay.new_bid(@bid)
       redirect_to review_request_path(@bid.review_request), notice: 'Bid was successfully created.'
     else
       render action: "new"
@@ -48,7 +48,7 @@ class BidsController < ApplicationController
     end
 
     if @bid.update_attributes(params[:bid])
-      BidNotifier.bid_updated(@bid).deliver
+      BidNotifier.delay.bid_updated(@bid)
       redirect_to review_request_path(@bid.review_request), notice: 'Bid was successfully updated.'
     else
       render action: "edit"
