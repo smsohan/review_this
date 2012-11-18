@@ -1,5 +1,5 @@
 class ReviewRequest < ActiveRecord::Base
-  attr_accessible :content, :title
+  attr_accessible :content, :title, :requestor, :reviewer
 
   belongs_to :requestor, class_name: 'User'
   belongs_to :reviewer, class_name: 'User'
@@ -26,6 +26,10 @@ class ReviewRequest < ActiveRecord::Base
 
   def bid_by(user)
     bids.where(bidder_id: user.id).first
+  end
+
+  def can_see_content?(user)
+    requestor == user || reviewer == user
   end
 
 end

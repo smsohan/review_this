@@ -5,7 +5,7 @@
   <div class="control-group">
     <%= f.label :review_request, :class => 'control-label' %>
     <div class="controls">
-      <%= @bid.review_request.title %>
+      <%=link_to @bid.review_request.title, @bid.review_request %>
     </div>
   </div>
 
@@ -24,7 +24,6 @@
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                bids_path, :class => 'btn' %>
+    <%= link_to 'Cancel', root_path, :class => 'btn' %>
   </div>
 <% end %>

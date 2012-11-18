@@ -1,5 +1,5 @@
 class Bid < ActiveRecord::Base
-  attr_accessible :bid_amount, :bid_message, :review_request_id
+  attr_accessible :bid_amount, :bid_message, :review_request_id, :bidder
 
   belongs_to :review_request
   belongs_to :bidder, class_name: 'User'

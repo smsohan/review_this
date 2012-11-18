@@ -111,5 +111,23 @@ describe ReviewRequest do
     end
   end
 
+  context "#can_see_content?" do
+    before(:each) do
+      @review_request = ReviewRequest.new(requestor: User.new, reviewer: User.new)
+    end
+
+    it 'returns true for the requestor' do
+      @review_request.can_see_content?(@review_request.requestor).should == true
+    end
+
+    it 'returns true for the reviewer' do
+      @review_request.can_see_content?(@review_request.reviewer).should == true
+    end
+
+    it 'returns false otherwise' do
+      @review_request.can_see_content?(User.new).should == false
+    end
+
+  end
 
 end

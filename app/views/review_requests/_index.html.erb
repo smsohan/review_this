@@ -7,7 +7,7 @@
       <th>Requestor</th>
       <th>Reviewer</th>
       <th>Last Updated</th>
-      <th></th>
+      <th>Your Bid</th>
     </tr>
   </thead>
   <tbody>
@@ -36,7 +36,9 @@
           <% end %>
 
           <% if user_bid = review_request.bid_by(current_user) %>
-            <%= link_to number_to_currency(user_bid.bid_amount), edit_review_request_bid_path(review_request, user_bid) %>
+            <%= number_to_currency(user_bid.bid_amount) %>
+            <%= link_to 'Details', review_request_path(review_request) %>
+            <%= link_to 'Edit', edit_review_request_bid_path(review_request, user_bid) %>
           <% end %>
 
         </td>

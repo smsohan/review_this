@@ -4,10 +4,14 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
+  <dt><strong>Title:</strong></dt>
   <dd><%= @review_request.title %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:content) %>:</strong></dt>
-  <dd><%= @review_request.content %></dd>
+
+  <% if @review_request.can_see_content?(current_user) %>
+    <dt><strong>Content:</strong></dt>
+    <dd><%= @review_request.content %></dd>
+  <% end %>
+
 </dl>
 
 <h3>Bids</h3>
