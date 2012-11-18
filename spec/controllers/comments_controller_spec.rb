@@ -51,6 +51,21 @@ describe CommentsController do
       comment.body.should == 'Please respond'
     end
 
+    it 'sends email notification to the receipient' do
+      login
+
+      other_user = User.create!(name: 'other', email: 'other@domain.com', password: 'other1', password_confirmation: 'other1')
+      review_request = ReviewRequest.new(title: 'review'){|rr| rr.requestor = other_user; rr.save!}
+
+      bid = Bid.new(bid_amount: 100, bid_message: 'Interested'){|b| b.bidder = @user; b.review_request =  review_request;  b.save!}
+
+      mail = mock
+      mail.should_receive(:deliver)
+      CommentNotifier.should_receive(:new_comment).and_return(mail)
+
+      post :create, comment: {bid_id: bid.id, body: 'Please respond'}
+    end
+
   end
 
 end

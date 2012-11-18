@@ -13,6 +13,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
+      CommentNotifier.new_comment(@comment).deliver
       render partial: 'comment', locals: {comment: @comment}, status: :created
     else
       render json: @comment.errors, status: :unprocessable_entity
